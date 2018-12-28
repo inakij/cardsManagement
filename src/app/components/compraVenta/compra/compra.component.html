@@ -1,0 +1,106 @@
+<div class="container_fluid">
+  <form [formGroup]="compraForm" (ngSubmit)="onSubmit(compraForm)">
+    <div class="row padder">
+      <div formGroupName="datosBasicosGrp" class="col-6 noPadding">		
+        <label class="col-4 form-group">
+          Número de Pedido:
+          <input type="text" class="form-control" formControlName="numPedido">
+        </label>
+        <label class="col-4 form-group">
+          Vendedor:
+          <input type="text" class="form-control" formControlName="vendedor">
+        </label>
+        <label class="col-4 form-group">
+          Número de Articulos:
+          <input type="number" class="form-control" formControlName="numArticulos">
+        </label> 
+      </div>
+      
+      <div formGroupName="estadoGrp" class="col-6 noPadding">
+        <label class="col-4 form-group">
+          Fecha de Compra:
+          <input type="date" class="form-control" formControlName="fechaCompra">
+        </label>
+        <label class="col-4 form-group">
+          Fecha de Llegada:
+          <input type="date" class="form-control" formControlName="fechaLlegada">
+        </label> 
+        <label class="col-4 form-group">
+          Estado del Pedido:
+          <select class="form-control" formControlName="estadoPedido">
+            <option></option>
+          </select>
+        </label>    
+      </div>
+    </div>
+
+    <div formGroupName="costesGrp">
+      <label class="col-2 form-group">
+        Importe Total:
+        <input type="number" class="form-control" formControlName="importeTotal">
+      </label> 
+      <label class="col-2 form-group">
+        Valos de los Articulos:
+        <input type="number" class="form-control" formControlName="valorArticulos">
+      </label> 
+      <label class="col-2 form-group">
+        Gastos de Envío:
+        <input type="number" class="form-control" formControlName="gastosEnvio">
+      </label> 
+      <label class="col-2 form-group">
+        Otros Gastos:
+        <input type="number" class="form-control" formControlName="otrosGastos">
+      </label> 
+      <label class="col-2 form-group">
+        Refund:
+        <input type="number" class="form-control" formControlName="refund">
+      </label>   
+      <label class="col-2 form-group">
+        MKM:
+        <input type="checkbox" class="form-check-inline" formControlName="mkm">
+      </label>
+    </div>
+
+    <div class="row padder">
+      <app-card-search (searchedCardsOutput)="onSearchedCardChange($event)" [reset]="resetOptions" class="col-6 noPadding"></app-card-search>
+      <app-card-status (cardStatusOutput)="onStatusChange($event)" [cards]="cards" [reset]="resetOptions" class="col-6 noPadding"></app-card-status>
+    </div>
+
+    <div>
+      <label class="form-group col-2">      
+        <button class="btn btn-success col-6" type="button" [disabled]="addDisabled" (click)="addCarta()">Añadir</button>      
+      </label>
+    </div>
+
+    <div formArrayName="cartasCompradasArray">
+      <div class="row">
+        <div class="col-11">
+          <label class="col-1">ImagenCarta</label>
+          <label class="col-4">Nombre</label>
+          <label class="col-1">Edicion</label>
+          <label class="col-1">Idioma</label>
+          <label class="col-1">Estado</label>
+          <label class="col-2">Extras</label>
+          <label class="col-1">Cantidad</label> 
+          <label class="col-1">Precio de Compra</label> 
+        </div>
+        <div class="col-1">
+          <label class="col-1">Acciones</label>
+        </div>
+      </div>
+      <div *ngFor="let cartaComprada of compraForm.controls.cartasCompradasArray.controls; let i=index" class="row">        
+        <app-carta-comprada class="col-11" [group]="cartaComprada" [carta]="cartasGuardadas[i]"></app-carta-comprada>
+        <div class="col-1">
+          <span (click)="removeCarta(i)"><i class="fas fa-trash-alt"></i></span>
+          <span (click)="splitCarta(i)"><i class="fas fa-divide"></i></span>
+        </div>        
+      </div>
+    </div>
+  
+    <label class="col-6 form-group">
+      Observaciones:
+      <textarea class="form-control" formControlName="observaciones"></textarea>
+    </label> 
+    <button type="submit" [disabled]="!compraForm.valid">Guardar</button>
+  </form>
+</div>
