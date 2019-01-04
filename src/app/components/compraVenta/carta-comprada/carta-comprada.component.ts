@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit  } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ICarta, Carta } from '../../../models/carta';
+import { Estados } from '../../../models/estados.enum';
 
 @Component({
   selector: 'app-carta-comprada',
@@ -9,19 +10,19 @@ import { ICarta, Carta } from '../../../models/carta';
 })
 export class CartaCompradaComponent implements OnInit {
   
-  @Input('group') group: FormGroup;
-  
+  @Input('group') group: FormGroup;  
   @Input('carta') carta: ICarta;
 
-  constructor() { 
-  }
+  public estados = Estados;
 
-  ngAfterViewInit(){
-    console.log(this.carta);
+  constructor() { 
   }
   
   ngOnInit() {
     this.group.controls.precioCompra.valueChanges.subscribe(value=>this.carta.precioCompra = value);
   }
 
+  asignarPrecio(porcentaje: number){
+    this.carta.precionVenta = this.carta.precioTotal + this.carta.precioTotal*porcentaje;
+  }
 }

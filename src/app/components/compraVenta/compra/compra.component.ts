@@ -2,7 +2,11 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { CardStatus, ICardStatus } from '../../../models/card-status';
 import { ApiCard, IApiCard } from '../../../models/api-card';
 import { ICarta, Carta } from '../../../models/carta';
+import { ICompra, Compra } from '../../../models/compra';
 import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Estados } from '../../../models/estados.enum';
+import { ComprasService } from '../../../services/compras.service';
+
 
 @Component({
   selector: 'app-compra',
@@ -18,7 +22,7 @@ export class CompraComponent implements OnInit {
   public cardStatus: ICardStatus;
   public resetOptions: number;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private comprasService: ComprasService) {
     this.generarForm();
   }
 
@@ -31,8 +35,20 @@ export class CompraComponent implements OnInit {
     this.resetOptions = 0;
   }
 
-  onSubmit() {
+  onSubmit({ value, valid }: { value: ICompra, valid: boolean }) {
     console.log('submit');
+    
+    // this.comprasService.createCompra(value).subscribe(compraId => {
+    //   console.log(compraId);
+    //   if(compraId){
+    //     //TODO mensaje guardado OK
+    //   }
+    // });
+    
+    //this.comprasService.getCompra('5c2f53240612980a100f2dab').subscribe(data=>console.log(data));
+    //this.comprasService.getCompras().subscribe(data=>console.log(data));
+    this.comprasService.deleteCompra("5c2f58398383e00acd653a42").subscribe(data=>console.log(data));
+    this.generarForm();
   }
 
   onStatusChange(cardStatus: ICardStatus) {
@@ -61,34 +77,43 @@ export class CompraComponent implements OnInit {
 
   generarForm() {
     this.compraForm = this.fb.group({
-      datosBasicosGrp: this.fb.group({        
-        numPedido: [''],
-        vendedor: [''],
-        numArticulos: ['']
-      }),
-      estadoGrp: this.fb.group({
-        fechaCompra: ['', Validators.required],
-        fechaLlegada: [''],
-        estadoPedido: ['']
-      }),
-      costesGrp: this.fb.group({
-        importeTotal: ['', Validators.required],
-        valorArticulos: ['', Validators.required],
-        gastosEnvio: [''],
-        otrosGastos: [''],
-        refund: [''],
-        mkm: [''],
-      }),
+      numCompra: [''],
+      vendedor: [''],
+      numArticulos: [0],
+      fechaCompra: [''],
+      fechaLlegada: [''],
+      estadoCompra: [''],
+      importeTotal: [0],
+      valorArticulos: [0],
+      gastosEnvio: [0],
+      otrosGastos: [0],
+      refund: [0],
+      mkm: [false],
       observaciones: [''],
       cartasCompradasArray: this.fb.array([])
     });
   }
 
-  initCarta(): FormGroup {
-    return this.fb.group({
+  initCarta(carta: ICarta): FormGroup {
+    return this.fb.group({      
       cantidad: [1, Validators.required],
-      precioCompra: ['']
-    });
+      precioCompra: [0],
+      precioVenta: [0],
+      observaciones: [''],
+      estadoVenta: [Estados.Poor],
+      apiId:[carta.apiId],
+      imagen:[carta.imagen],
+      nombre:[carta.nombre],
+      edicion:[carta.edicion],
+      idioma:[carta.idioma],
+      estadoCompra:[carta.estadoCompra],
+      foil:[carta.foil],
+      firmado:[carta.firmado],
+      alterado:[carta.alterado],
+      precioTotal:[],
+      vendido: [false],
+      fechaVenta: [null]
+    });    
   }
 
   addCarta() {
@@ -98,24 +123,26 @@ export class CompraComponent implements OnInit {
     this.cartasGuardadas.push(carta);
 
     const cartas = this.getCartasCompradas();
-    cartas.push(this.initCarta());
+    cartas.push(this.initCarta(carta));
     this.addDisabled = true;
     this.resetOptions++;
   }
 
   removeCarta(indexCarta: number) {
     this.cartasGuardadas.splice(indexCarta, 1);
-
-    const cartas = this.getCartasCompradas();
-    cartas.removeAt(indexCarta);
-    console.log(this.cartasGuardadas);
+    this.getCartasCompradas().removeAt(indexCarta);
   }
 
-  splitCarta(indexCarta: number){
-    console.log(this.getCartasCompradas());
+  /**
+   * Divide una compra en unidades
+   */
+  splitCarta(indexCarta: number) {
     let cantidad: number = (<FormGroup>this.getCartasCompradas().controls[indexCarta]).controls.cantidad.value;
-    for(let forIndex = 0; forIndex<cantidad; forIndex++){
-      this.getCartasCompradas().push(this.initCarta());
+    let carta: ICarta = new Carta();
+    Object.assign(carta, <FormGroup>this.getCartasCompradas().controls[indexCarta].value);
+    for (let forIndex = 0; forIndex < cantidad; forIndex++) {
+      //this.getCartasCompradas().push(this.initCarta(this.cartasGuardadas[indexCarta]));
+      this.getCartasCompradas().push(this.initCarta(carta));
       this.cartasGuardadas.push(this.cartasGuardadas[indexCarta]);
     }
     this.getCartasCompradas().removeAt(indexCarta);

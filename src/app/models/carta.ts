@@ -3,7 +3,8 @@ import { IApiCard } from './api-card';
 import { ICardStatus } from './card-status';
 
 export interface ICarta {
-  id: string;
+  _id: string;
+  idCompra: string;
   apiId: string;
   imagen: string;
   nombre: string;
@@ -15,29 +16,39 @@ export interface ICarta {
   firmado: boolean;
   alterado: boolean;
   precioCompra: number;
+  precioTotal: number;
   precionVenta: number;
+  cantidad: number;
+  observaciones: string;
+  vendido: boolean;
+  fechaVenta: Date;
 
   mapFromApiCard(card: IApiCard);
   mapFromStatus(status: ICardStatus);
 }
 
 export class Carta implements ICarta{
-  public id: string;
+  public _id: string;
+  public idCompra: string;
   public apiId: string;
   public imagen: string;
   public nombre: string;
   public edicion: string;
   public idioma: string;
-  public estadoCompra: Estados;
+  public estadoCompra: Estados;  
   public estadoVenta: Estados;
   public foil: boolean;
   public firmado: boolean;
   public alterado: boolean;
   public precioCompra: number;
+  public precioTotal: number;
   public precionVenta: number;
+  public cantidad: number;
+  public observaciones: string;
+  public vendido: boolean;
+  public fechaVenta: Date;
 
   constructor(){
-    this.id = '';
     this.apiId = '';
     this.imagen = '';    
     this.nombre = '';
@@ -49,7 +60,12 @@ export class Carta implements ICarta{
     this.firmado = false;
     this.alterado = false;
     this.precioCompra = 0;
+    this.precioTotal = 0;
     this.precionVenta = 0;
+    this.cantidad = 1;
+    this.observaciones = '';
+    this.vendido = false;
+    this.fechaVenta = null;
   }
 
   mapFromApiCard(card: IApiCard){

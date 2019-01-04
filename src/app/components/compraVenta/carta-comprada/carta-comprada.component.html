@@ -11,4 +11,31 @@
   <label class="col-1">
     <input type="number" class="form-control" formControlName="precioCompra">  
   </label>
+
+  <label class="col-1">Venta:</label>
+  <label class="col-6">
+    <input type="text" class="form-control" placeholder="observaciones" formControlName="observaciones">
+  </label>
+  <label class="col-1">
+    <select class="form-control" formControlName="estadoVenta">
+      <option *ngFor="let estado of estados | enum" [value]="estado.key">{{estado.value}}</option>
+    </select>
+  </label>
+  <label class="col-3">
+    <label class="col-6">
+      <label class="col-12">Precio Total:</label>
+      <label>{{carta.precioTotal}}</label>
+    </label>
+    <label class="col-3">
+      <label class="col-12">20%:</label>
+      <button type="button" class="btn btn-primary col-12" [disabled]="carta.precioTotal<=0" (click)="asignarPrecio(0.2)">{{carta.precioTotal+carta.precioTotal*0.2}}</button>
+    </label>
+    <label class="col-3">
+      <label class="col-12">30%:</label>      
+      <button type="button" class="btn btn-primary col-12" [disabled]="carta.precioTotal<=0" (click)="asignarPrecio(0.3)">{{carta.precioTotal+carta.precioTotal*0.3}}</button>
+    </label>
+  </label>  
+  <label class="col-1">
+    <input type="number" class="form-control" formControlName="precioVenta">  
+  </label> 
 </div>

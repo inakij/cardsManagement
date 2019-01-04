@@ -1,10 +1,10 @@
 <div class="container_fluid">
   <form [formGroup]="compraForm" (ngSubmit)="onSubmit(compraForm)">
     <div class="row padder">
-      <div formGroupName="datosBasicosGrp" class="col-6 noPadding">		
+      <div class="col-6 noPadding">		
         <label class="col-4 form-group">
-          Número de Pedido:
-          <input type="text" class="form-control" formControlName="numPedido">
+          Número de Compra:
+          <input type="text" class="form-control" formControlName="numCompra">
         </label>
         <label class="col-4 form-group">
           Vendedor:
@@ -16,7 +16,7 @@
         </label> 
       </div>
       
-      <div formGroupName="estadoGrp" class="col-6 noPadding">
+      <div class="col-6 noPadding">
         <label class="col-4 form-group">
           Fecha de Compra:
           <input type="date" class="form-control" formControlName="fechaCompra">
@@ -26,15 +26,15 @@
           <input type="date" class="form-control" formControlName="fechaLlegada">
         </label> 
         <label class="col-4 form-group">
-          Estado del Pedido:
-          <select class="form-control" formControlName="estadoPedido">
+          Estado del Compra:
+          <select class="form-control" formControlName="estadoCompra">
             <option></option>
           </select>
         </label>    
       </div>
     </div>
 
-    <div formGroupName="costesGrp">
+    <div>
       <label class="col-2 form-group">
         Importe Total:
         <input type="number" class="form-control" formControlName="importeTotal">
@@ -82,10 +82,10 @@
           <label class="col-1">Estado</label>
           <label class="col-2">Extras</label>
           <label class="col-1">Cantidad</label> 
-          <label class="col-1">Precio de Compra</label> 
+          <label class="col-1">Precio</label> 
         </div>
         <div class="col-1">
-          <label class="col-1">Acciones</label>
+          <label>Acciones</label>
         </div>
       </div>
       <div *ngFor="let cartaComprada of compraForm.controls.cartasCompradasArray.controls; let i=index" class="row">        
@@ -97,10 +97,15 @@
       </div>
     </div>
   
-    <label class="col-6 form-group">
-      Observaciones:
-      <textarea class="form-control" formControlName="observaciones"></textarea>
-    </label> 
-    <button type="submit" [disabled]="!compraForm.valid">Guardar</button>
+    <div class="row col-12">
+      <label class="form-group col-6">
+        Observaciones:
+        <textarea class="form-control" formControlName="observaciones"></textarea>
+      </label> 
+    </div>
+    
+    <div class="padder">
+      <button type="submit" [disabled]="!compraForm.valid" class="btn btn-success">Guardar</button>
+    </div>
   </form>
 </div>

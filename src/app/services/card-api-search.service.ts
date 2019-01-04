@@ -3,11 +3,12 @@ import { ICardsReturn, ISetsReturn, CardsReturn, SetsReturn } from '../models/re
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { urls } from './http-resources.enum';
 
 @Injectable()
 export class CardApiSearchService {
 
-  private endpoint: string = 'https://api.magicthegathering.io/';
+  private endpoint: string = urls.mtgAPIURL;
   private version: string;
   private searchterm: string;
 

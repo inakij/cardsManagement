@@ -13,11 +13,13 @@ import { CardApiSearchService } from './services/card-api-search.service';
 import { CompraComponent } from './components/compraVenta/compra/compra.component';
 import { EnumPipe } from './pipes/enum.pipe';
 import { CartaCompradaComponent } from './components/compraVenta/carta-comprada/carta-comprada.component';
+import { ComprasComponent } from './components/compraVenta/compras/compras.component';
+import { ComprasService } from './services/compras.service';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, ReactiveFormsModule, NgbModule.forRoot(), HttpClientModule ],
-  declarations: [ AppComponent, HomeComponent, CardSearchComponent, CardStatusComponent, CompraComponent, EnumPipe, CartaCompradaComponent ],
+  declarations: [ AppComponent, HomeComponent, CardSearchComponent, CardStatusComponent, CompraComponent, EnumPipe, CartaCompradaComponent, ComprasComponent ],
   bootstrap:    [ AppComponent ],
-  providers: [ CardApiSearchService ]
+  providers: [ CardApiSearchService, ComprasService ]
 })
 export class AppModule { }
