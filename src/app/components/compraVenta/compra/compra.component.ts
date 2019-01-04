@@ -46,8 +46,8 @@ export class CompraComponent implements OnInit {
     // });
     
     //this.comprasService.getCompra('5c2f53240612980a100f2dab').subscribe(data=>console.log(data));
-    //this.comprasService.getCompras().subscribe(data=>console.log(data));
-    this.comprasService.deleteCompra("5c2f58398383e00acd653a42").subscribe(data=>console.log(data));
+    this.comprasService.getCompras().subscribe(data=>console.log(data));
+    //this.comprasService.deleteCompra("5c2f58398383e00acd653a42").subscribe(data=>console.log(data));
     this.generarForm();
   }
 

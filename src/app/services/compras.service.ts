@@ -14,9 +14,9 @@ export class ComprasService {
 
   constructor(private http: HttpClient) { }
 
-  getCompras(): Observable<ICompra[]> {
+  getCompras(): Observable<Array<ICompra>> {
     let url = this.endpoint + 'compras';
-    return this.http.get(url);
+    return this.http.get<Array<ICompra>>(url);
       // .pipe(map((data: ICompra[]) => {
       //   console.log(data);
       //   return data;
@@ -25,7 +25,7 @@ export class ComprasService {
 
   getCompra(id: string): Observable<ICompra> {
     let url = this.endpoint + 'compra/' + id;
-    return this.http.get(url);
+    return this.http.get<ICompra>(url);
     // .pipe(map((data: ICompra) => {
     //   console.log(data);
     //   return data;
@@ -42,7 +42,7 @@ export class ComprasService {
   }
 
   updateCompra(compra: ICompra): Observable<any> {
-    let url = this.endpoint + 'compra/' + compra.id;
+    let url = this.endpoint + 'compra/' + compra._id;
     return this.http.patch(url, compra);
     // .subscribe(data => {
     //   console.log(data);
