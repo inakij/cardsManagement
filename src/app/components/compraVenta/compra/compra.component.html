@@ -89,7 +89,7 @@
         </div>
       </div>
       <div *ngFor="let cartaComprada of compraForm.controls.cartasCompradasArray.controls; let i=index" class="row">        
-        <app-carta-comprada class="col-11" [group]="cartaComprada" [carta]="cartasGuardadas[i]"></app-carta-comprada>
+        <app-carta-comprada class="col-11" [group]="cartaComprada"></app-carta-comprada>
         <div class="col-1">
           <span (click)="removeCarta(i)"><i class="fas fa-trash-alt"></i></span>
           <span (click)="splitCarta(i)"><i class="fas fa-divide"></i></span>

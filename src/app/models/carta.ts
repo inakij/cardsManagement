@@ -49,11 +49,6 @@ export class Carta implements ICarta{
   public fechaVenta: Date;
 
   constructor(){
-    this.apiId = '';
-    this.imagen = '';    
-    this.nombre = '';
-    this.edicion = '';
-    this.idioma = '';
     this.estadoCompra = Estados.Poor;
     this.estadoVenta = Estados.Poor;
     this.foil = false;
@@ -63,9 +58,7 @@ export class Carta implements ICarta{
     this.precioTotal = 0;
     this.precionVenta = 0;
     this.cantidad = 1;
-    this.observaciones = '';
     this.vendido = false;
-    this.fechaVenta = null;
   }
 
   mapFromApiCard(card: IApiCard){

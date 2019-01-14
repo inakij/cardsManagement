@@ -9,5 +9,3 @@ export class AppComponent  {
   name = 'My-App';
 
 }
-
-

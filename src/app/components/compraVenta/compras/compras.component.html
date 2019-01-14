@@ -1,22 +1,51 @@
-nuevoCompraButton
-lista de compras
-  - Info
-  - Acciones
-    - Detalle
-    - Eliminar 
+<a class="btn btn-success" (click)="nuevaCompra()">Nueva Compra</a>
 
 <div class="container-fluid">
 
-  <div class="row">
-    <label class="col-11">
-      <label>Numero Compra</label>
-      <label>Vendedor</label>
-      <label>Fecha Compra</label>
-      <label>Estado</label>
-      <label>Precio</label>
-    </label>
-    <label class="col-1">Acciones</label>
-  </div>
+  <table>
+    <thead>
+      <th>Numero Compra</th>
+      <th>Vendedor</th>
+      <th>Fecha Compra</th>
+      <th>Fecha Llegada</th>
+      <th>Estado</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+    </thead>
 
+    <tbody>
+      <ng-container *ngFor="let compra of compras; let indexCompra = index">
+        <tr>
+          <td>{{compra.numCompra}}</td>
+          <td>{{compra.vendedor}}</td>
+          <td>{{compra.fechaCompra}}</td>
+          <td>{{compra.fechaLlegada}}</td>
+          <td>{{compra.estado}}</td>
+          <td>{{compra.precio}}</td>
+          <td>
+            <label (click)="expandirCompra(indexCompra)"><i class="fas fa-search"></i></label>
+            <label (click)="editarCompra(compra._id)"><i class="fas fa-pencil-alt"></i></label>
+            <label (click)="borrarCompra(compra._id)"><i class="fas fa-trash-alt"></i></label>
+          </td>
+        </tr>
+        <ng-container *ngIf="this.expandido[indexCompra]">
+          <tr> 
+            <td>Nombre</td>
+            <td>Expansion</td>
+            <td>Estado</td>
+            <td>Cantidad</td>
+            <td>Precio</td>
+          </tr>  
+          <tr *ngFor="let carta of compra.cartasCompradasArray"> 
+            <td>{{carta.nombre}}</td>
+            <td>{{carta.expansion}}</td>
+            <td>{{carta.estado}}</td>
+            <td>{{carta.cantidad}}</td>
+            <td>{{carta.recio}}</td>
+          </tr>     
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </table>
 </div>
   

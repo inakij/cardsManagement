@@ -1,6 +1,5 @@
 import { Estados } from './estados.enum';
 import { ICarta, Carta } from './carta';
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 export interface ICompra {
   _id: string;
@@ -36,18 +35,14 @@ export class Compra implements ICompra {
   cartasCompradasArray: ICarta[];
 
   constructor() {
-    this.numCompra = '';
-    this.vendedor = '';
-    this.numArticulos = 0;
-    this.fechaCompra = null;
-    this.fechaLlegada = null;
-    this.estadoCompra = '';
-    this.importeTotal = 0;
+    this.vendedor = 'peterkrouch';
+    this.numArticulos = 7;
+    this.fechaCompra = new Date();
+    this.importeTotal = 100;
     this.gastosEnvio = 0;
     this.otrosGastos = 0;
     this.refund = 0;
     this.mkm = false;
-    this.observaciones = '';
     this.cartasCompradasArray = [];
   }
 }

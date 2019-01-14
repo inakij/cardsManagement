@@ -5,21 +5,47 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule }    from '@angular/common/http';
 
+//ROUTING
+import { AppRoutingModule, routingComponents } from './app-routing.module';
+
+//SERVICES
+import { CardApiSearchService } from './services/card-api-search.service';
+import { ComprasService } from './services/compras.service';
+import { StockService } from './services/stock.service';
+import { VentasService } from './services/ventas.service';
+
+//COMPONENTS
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
 import { CardSearchComponent } from './components/shared/card-search/card-search.component';
 import { CardStatusComponent } from './components/shared/card-status/card-status.component';
-import { CardApiSearchService } from './services/card-api-search.service';
-import { CompraComponent } from './components/compraVenta/compra/compra.component';
-import { EnumPipe } from './pipes/enum.pipe';
 import { CartaCompradaComponent } from './components/compraVenta/carta-comprada/carta-comprada.component';
-import { ComprasComponent } from './components/compraVenta/compras/compras.component';
-import { ComprasService } from './services/compras.service';
+
+//PIPES
+import { EnumPipe } from './pipes/enum.pipe';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, ReactiveFormsModule, NgbModule.forRoot(), HttpClientModule ],
-  declarations: [ AppComponent, HomeComponent, CardSearchComponent, CardStatusComponent, CompraComponent, EnumPipe, CartaCompradaComponent, ComprasComponent ],
+  imports:      [ 
+    BrowserModule, 
+    AppRoutingModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    NgbModule.forRoot(), 
+    HttpClientModule 
+    ],
+  declarations: [ 
+    AppComponent, 
+    routingComponents, 
+    CardSearchComponent, 
+    CardStatusComponent, 
+    EnumPipe, 
+    CartaCompradaComponent
+    ],
   bootstrap:    [ AppComponent ],
-  providers: [ CardApiSearchService, ComprasService ]
+  providers: [ 
+    CardApiSearchService, 
+    ComprasService, 
+    StockService, 
+    VentasService 
+    ]
 })
 export class AppModule { }

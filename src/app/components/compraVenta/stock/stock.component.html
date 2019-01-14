@@ -1,0 +1,22 @@
+<button class="btn btn-success" type="button" (click)="verCarrito()" [disabled]="carritoDisabled">Carrito</button>
+<table>
+  <thead>
+    <th>Nombre</th>
+    <th>Edicion</th>
+    <th>Estado</th>
+    <th>Cantidad</th>
+    <th>Precio</th>
+    <th>Acciones</th>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let carta of stock">
+      <td>{{carta.nombre}}</td>
+      <td>{{carta.edicion}}</td>
+      <td>{{carta.estadoVenta}}</td>
+      <td>{{carta.cantidad}}</td>
+      <td>{{carta.precioVenta}}</td>
+      <td (click)="addToCart(carta)"><i class="fas fa-plus-circle"></i></td>
+    </tr>
+  </tbody>
+</table>

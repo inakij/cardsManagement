@@ -11,15 +11,16 @@ import { Estados } from '../../../models/estados.enum';
 export class CartaCompradaComponent implements OnInit {
   
   @Input('group') group: FormGroup;  
-  @Input('carta') carta: ICarta;
-
+ 
   public estados = Estados;
+  public carta: ICarta;
 
-  constructor() { 
+  constructor() {     
   }
   
   ngOnInit() {
     this.group.controls.precioCompra.valueChanges.subscribe(value=>this.carta.precioCompra = value);
+    this.carta = this.group.value;
   }
 
   asignarPrecio(porcentaje: number){
