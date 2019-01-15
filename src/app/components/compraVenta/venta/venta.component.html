@@ -1,3 +1,95 @@
-<p>
-venta works!
-</p>
+<div class="container_fluid">
+  <form [formGroup]="ventaForm" (ngSubmit)="onSubmit(ventaForm)" class="padder">
+    <div class="row padder">
+      <table class="table fixed" class="columns12">
+        <thead>
+          <tr class="columns12">
+            <th scope="col" class="columns1">nº de Venta</th>
+            <th scope="col" class="columns1">Comprador</th>
+            <th scope="col" class="columns05">nº Articulos</th>
+            <th scope="col" class="columns2">Fecha Venta</th>
+            <th scope="col" class="columns2">Fecha Llegada</th>
+            <th scope="col" class="columns1">Estado</th>
+            <th scope="col" class="columns05">Total</th>
+            <th scope="col" class="columns05">Gastos Envío</th>
+            <th scope="col" class="columns05">Otros Gastos</th>
+            <th scope="col" class="columns05">Refund</th>
+            <th scope="col" class="columns05">MKM</th>
+            <th scope="col" class="columns2">Observaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="columns12">
+            <td class="columns1">
+              <input type="text" class="form-control" formControlName="numVenta">
+            </td>
+            <td class="columns2">
+              <input type="text" class="form-control" formControlName="comprador">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="numArticulos"> 
+            </td>
+            <td class="columns1">
+              <input type="date" class="form-control" formControlName="fechaVenta">
+            </td>
+            <td class="columns1">
+              <input type="date" class="form-control" formControlName="fechaLlegada">
+            </td>
+            <td class="columns1">
+              <select class="form-control" formControlName="estadoVenta">
+                <option></option>
+              </select>
+            </td>
+            <td class="columns1">              
+              <input type="number" class="form-control" formControlName="importeTotal">
+            </td>            
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="gastosEnvio">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="otrosGastos">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="refund">
+            </td>
+            <td class="columns1">
+              <input type="checkbox" class="form-check-inline" formControlName="mkm">
+            </td>
+            <td class="columns1">
+              <input type="text" class="form-control" formControlName="observaciones">
+            </td>
+          </tr>      
+        </tbody>
+      </table>    
+    </div> 
+       
+    <div formArrayName="cartasVendidas">
+      <div class="row">
+        <div class="col-11">
+          <label class="col-1">ImagenCarta</label>
+          <label class="col-1">Nombre</label>
+          <label class="col-1">Edicion</label>
+          <label class="col-1">Idioma</label>
+          <label class="col-1">Estado</label>
+          <label class="col-1">Extras</label>
+          <label class="col-1">Cantidad</label>
+          <label class="col-4">Observaciones</label>
+          <label class="col-1">Precio</label> 
+        </div>
+        <div class="col-1">
+          <label>Acciones</label>
+        </div>
+      </div>
+      <div *ngFor="let cartaVendida of ventaForm.controls.cartasVendidas.controls; let i=index" class="row">        
+        <app-carta-vendida class="col-11" [group]="cartaVendida"></app-carta-vendida>
+        <div class="col-1">
+          <span (click)="removeCarta(i)"><i class="fas fa-trash-alt"></i></span>          
+        </div>        
+      </div>
+    </div>    
+    
+    <div>
+      <button type="submit" [disabled]="!ventaForm.valid" class="btn btn-success">Guardar</button>
+    </div>
+  </form>
+</div>

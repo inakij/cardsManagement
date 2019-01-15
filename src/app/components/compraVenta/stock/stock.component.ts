@@ -29,6 +29,7 @@ export class StockComponent implements OnInit {
     this.venta.cartasVendidas.push(carta);
     this.stock.splice(this.stock.findIndex(cartaStock => cartaStock._id === carta._id), 1);
     this.carritoDisabled = false;
+    console.log('añadido al carrito');
     console.log(this.venta);
   }
 

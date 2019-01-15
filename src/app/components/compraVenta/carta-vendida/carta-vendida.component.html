@@ -1,0 +1,13 @@
+<div [formGroup]="group">
+	<label class="col-1">ImagenCarta</label>
+  <label class="col-1">{{carta.nombre}}</label>
+  <label class="col-1">{{carta.edicion}}</label>
+  <label class="col-1">{{carta.idioma}}</label>
+  <label class="col-1">{{carta.estadoVenta}}</label>  
+  <label class="col-1">Extras</label>
+  <label class="col-1">{{carta.cantidad}}</label>  
+  <label class="col-4">
+    <input type="text" class="form-control" placeholder="observaciones" formControlName="observaciones">
+  </label>       
+  <label class="col-1">{{carta.precioVenta}}</label> 
+</div>

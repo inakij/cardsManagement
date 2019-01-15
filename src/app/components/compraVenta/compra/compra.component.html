@@ -1,75 +1,76 @@
 <div class="container_fluid">
-  <form [formGroup]="compraForm" (ngSubmit)="onSubmit(compraForm)">
+  <form [formGroup]="compraForm" (ngSubmit)="onSubmit(compraForm)" class="padder">
     <div class="row padder">
-      <div class="col-6 noPadding">		
-        <label class="col-4 form-group">
-          Número de Compra:
-          <input type="text" class="form-control" formControlName="numCompra">
-        </label>
-        <label class="col-4 form-group">
-          Vendedor:
-          <input type="text" class="form-control" formControlName="vendedor">
-        </label>
-        <label class="col-4 form-group">
-          Número de Articulos:
-          <input type="number" class="form-control" formControlName="numArticulos">
-        </label> 
-      </div>
-      
-      <div class="col-6 noPadding">
-        <label class="col-4 form-group">
-          Fecha de Compra:
-          <input type="date" class="form-control" formControlName="fechaCompra">
-        </label>
-        <label class="col-4 form-group">
-          Fecha de Llegada:
-          <input type="date" class="form-control" formControlName="fechaLlegada">
-        </label> 
-        <label class="col-4 form-group">
-          Estado del Compra:
-          <select class="form-control" formControlName="estadoCompra">
-            <option></option>
-          </select>
-        </label>    
-      </div>
+      <table class="table fixed" class="columns12">
+        <thead>
+          <tr class="columns12">
+            <th scope="col" class="columns1">nº de Compra</th>
+            <th scope="col" class="columns2">Vendedor</th>
+            <th scope="col" class="columns1">Articulos</th>
+            <th scope="col" class="columns2">Fecha Compra</th>
+            <th scope="col" class="columns2">Fecha Llegada</th>
+            <th scope="col" class="columns1">Estado</th>
+            <th scope="col" class="columns05">Total</th>
+            <th scope="col" class="columns05">Valor Articulos</th>
+            <th scope="col" class="columns05">Gastos Envío</th>
+            <th scope="col" class="columns05">Otros Gastos</th>
+            <th scope="col" class="columns05">Refund</th>
+            <th scope="col" class="columns05">MKM</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="columns12">
+            <td class="columns1">
+              <input type="text" class="form-control" formControlName="numCompra">
+            </td>
+            <td class="columns1">
+              <input type="text" class="form-control" formControlName="vendedor">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="numArticulos">              
+            </td>
+            <td class="columns1">
+              <input type="date" class="form-control" formControlName="fechaCompra">
+            </td>
+            <td class="columns1">
+              <input type="date" class="form-control" formControlName="fechaLlegada">
+            </td>
+            <td class="columns1">
+              <select class="form-control" formControlName="estadoCompra">
+                <option></option>
+              </select>
+            </td>
+            <td class="columns1">              
+              <input type="number" class="form-control" formControlName="importeTotal">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="valorArticulos">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="gastosEnvio">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="otrosGastos">
+            </td>
+            <td class="columns1">
+              <input type="number" class="form-control" formControlName="refund">
+            </td>
+            <td class="columns1">
+              <input type="checkbox" class="form-check-inline" formControlName="mkm">
+            </td>
+          </tr>      
+        </tbody>
+      </table>    
     </div>
 
-    <div>
-      <label class="col-2 form-group">
-        Importe Total:
-        <input type="number" class="form-control" formControlName="importeTotal">
-      </label> 
-      <label class="col-2 form-group">
-        Valos de los Articulos:
-        <input type="number" class="form-control" formControlName="valorArticulos">
-      </label> 
-      <label class="col-2 form-group">
-        Gastos de Envío:
-        <input type="number" class="form-control" formControlName="gastosEnvio">
-      </label> 
-      <label class="col-2 form-group">
-        Otros Gastos:
-        <input type="number" class="form-control" formControlName="otrosGastos">
-      </label> 
-      <label class="col-2 form-group">
-        Refund:
-        <input type="number" class="form-control" formControlName="refund">
-      </label>   
-      <label class="col-2 form-group">
-        MKM:
-        <input type="checkbox" class="form-check-inline" formControlName="mkm">
-      </label>
+  
+    <div class="row">
+      <app-card-search (searchedCardsOutput)="onSearchedCardChange($event)" [reset]="resetOptions" class="col-6 no-padding-right"></app-card-search>
+      <app-card-status (cardStatusOutput)="onStatusChange($event)" [cards]="cards" [reset]="resetOptions" class="col-6 no-padding-left"></app-card-status>
     </div>
 
-    <div class="row padder">
-      <app-card-search (searchedCardsOutput)="onSearchedCardChange($event)" [reset]="resetOptions" class="col-6 noPadding"></app-card-search>
-      <app-card-status (cardStatusOutput)="onStatusChange($event)" [cards]="cards" [reset]="resetOptions" class="col-6 noPadding"></app-card-status>
-    </div>
-
-    <div>
-      <label class="form-group col-2">      
-        <button class="btn btn-success col-6" type="button" [disabled]="addDisabled" (click)="addCarta()">Añadir</button>      
-      </label>
+    <div>           
+      <button class="btn btn-success col-2" type="button" [disabled]="addDisabled" (click)="addCarta()">Añadir</button>  
     </div>
 
     <div formArrayName="cartasCompradasArray">
@@ -104,7 +105,7 @@
       </label> 
     </div>
     
-    <div class="padder">
+    <div>
       <button type="submit" [disabled]="!compraForm.valid" class="btn btn-success">Guardar</button>
     </div>
   </form>

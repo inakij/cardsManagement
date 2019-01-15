@@ -8,6 +8,7 @@ import { Estados } from '../../../models/estados.enum';
 import { ComprasService } from '../../../services/compras.service';
 import { CardApiSearchService } from '../../../services/card-api-search.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import moment from 'moment';
 
 @Component({
   selector: 'app-compra',
@@ -61,6 +62,7 @@ export class CompraComponent implements OnInit {
           //TODO mensaje guardado OK
           console.log('Guardado OK');
           this.compra = compra;
+          this.generarForm();
           this.populateForm();
         }
       });
@@ -72,12 +74,11 @@ export class CompraComponent implements OnInit {
           //TODO mensaje guardado OK
           console.log('Modificado OK');
           this.compra = compra;
+          this.generarForm();
           this.populateForm();
         }
       });
-    }
-    // this.compra = new Compra();
-    // this.populateForm();
+    }    
   }
 
   onStatusChange(cardStatus: ICardStatus) {
@@ -97,13 +98,13 @@ export class CompraComponent implements OnInit {
     this.compraForm = this.fb.group({
       _id: [''],
       numCompra: [''],
-      vendedor: [''],
-      numArticulos: [0],
-      fechaCompra: [''],
+      vendedor: ['', Validators.required],
+      numArticulos: [0, Validators.required],
+      fechaCompra: ['', Validators.required],
       fechaLlegada: [''],
       estadoCompra: [''],
-      importeTotal: [0],
-      valorArticulos: [0],
+      importeTotal: [0, Validators.required],
+      valorArticulos: [0, Validators.required],
       gastosEnvio: [0],
       otrosGastos: [0],
       refund: [0],
@@ -140,16 +141,16 @@ export class CompraComponent implements OnInit {
     return this.fb.group({
       _id: [''],
       cantidad: [0, Validators.required],
-      precioCompra: [0],
+      precioCompra: [0, Validators.required],
       precioVenta: [0],
       observaciones: [''],
       estadoVenta: [Estados.Poor],
       apiId: [''],
       imagen: [''],
-      nombre: [''],
-      edicion: [''],
-      idioma: [''],
-      estadoCompra: [Estados.Poor],
+      nombre: ['', Validators.required],
+      edicion: ['', Validators.required],
+      idioma: ['', Validators.required],
+      estadoCompra: [Estados.Poor, Validators.required],
       foil: [false],
       firmado: [false],
       alterado: [false],

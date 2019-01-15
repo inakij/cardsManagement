@@ -1,29 +1,40 @@
-<div class="form-inline">
-	<div class="form-group col-4">
-		<label for="inputIdioma" class="col-12">Idioma:</label>
-      <select id="inputIdioma" class="form-control col-12" [(ngModel)] ="cardStatus.idioma" (change)="emitStatus()">
-        <option *ngFor="let idioma of idiomas" [value]="idioma">{{idioma}}</option>
-      </select>
-  </div>
-  <div class="form-group col-4">
-      <label for="inputEstado" class="col-12">Estado:</label>
-      <select id="inputEstado" class="form-control col-12" [(ngModel)] ="cardStatus.estado" (change)="emitStatus()">
-        <option *ngFor="let estado of estados | enum" [value]="estado.key">{{estado.value}}</option>
-      </select>
-  </div>
-  <div class="form-group col-4">
-    <label class="col-12">Extras: </label>    
-        <div class="form-check col-4">
-          <input type="checkbox" class="form-check-input" id="foilCheck" [(ngModel)]="cardStatus.foil" (change)="emitStatus()">
-          <label class="form-check-label" for="foilCheck">Foil</label>
-        </div>
-        <div class="form-check col-4">
-          <input type="checkbox" class="form-check-input" id="firmadoCheck" [(ngModel)]="cardStatus.firmado" (change)="emitStatus()">
-          <label class="form-check-label" for="firmadoCheck">Signed</label>
-        </div>
-        <div class="form-check col-4">
-          <input type="checkbox" class="form-check-input" id="alteradoCheck" [(ngModel)]="cardStatus.alterado" (change)="emitStatus()">
-          <label class="form-check-label" for="alteradoCheck">Altered</label>
-        </div>        
-  </div>
+
+<div>
+  <table class="table-stripped fixed" class="columns12">
+    <thead>
+      <tr class="columns12">
+        <th scope="col" class="columns4">Idioma</th>
+        <th scope="col" class="columns4">Estado</th>
+        <th scope="col" class="columns4">Extras</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="columns12">
+        <td class="columns4">
+          <select id="inputIdioma" class="form-control col-12" [(ngModel)] ="cardStatus.idioma" (change)="emitStatus()">
+            <option *ngFor="let idioma of idiomas" [value]="idioma">{{idioma}}</option>
+          </select>
+        </td>
+        <td class="columns4">
+          <select id="inputEstado" class="form-control col-12" [(ngModel)] ="cardStatus.estado" (change)="emitStatus()">
+            <option *ngFor="let estado of estados | enum" [value]="estado.key">{{estado.value}}</option>
+          </select>
+        </td>
+        <td class="columns4">
+          <div class="form-check-inline columns3">
+            <input type="checkbox" class="form-check-input" id="foilCheck" [(ngModel)]="cardStatus.foil" (change)="emitStatus()">
+            <label class="form-check-label" for="foilCheck"><i class="fas fa-star"></i></label>
+          </div>
+          <div class="form-check-inline columns3">
+            <input type="checkbox" class="form-check-input" id="firmadoCheck" [(ngModel)]="cardStatus.firmado" (change)="emitStatus()">
+            <label class="form-check-label" for="firmadoCheck"><i class="fas fa-signature"></i></label>
+          </div>
+          <div class="form-check-inline columns3">
+            <input type="checkbox" class="form-check-input" id="alteradoCheck" [(ngModel)]="cardStatus.alterado" (change)="emitStatus()">
+            <label class="form-check-label" for="alteradoCheck"><i class="fas fa-paint-brush"></i></label>
+          </div>        
+        </td>
+      </tr>    
+    </tbody>
+  </table>
 </div>

@@ -21,7 +21,7 @@ export interface ICarta {
   cantidad: number;
   observaciones: string;
   vendido: boolean;
-  fechaVenta: Date;
+  fechaVenta: string;
 
   mapFromApiCard(card: IApiCard);
   mapFromStatus(status: ICardStatus);
@@ -46,7 +46,7 @@ export class Carta implements ICarta{
   public cantidad: number;
   public observaciones: string;
   public vendido: boolean;
-  public fechaVenta: Date;
+  public fechaVenta: string;
 
   constructor(){
     this.estadoCompra = Estados.Poor;

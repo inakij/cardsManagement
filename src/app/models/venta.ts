@@ -1,13 +1,14 @@
 import { Estados } from './estados.enum';
 import { ICarta, Carta } from './carta';
+import moment from 'moment';
 
 export interface IVenta {
   _id: string;
   numVenta: string;
   comprador: string;
   numArticulos: number;
-  fechaVenta: Date;
-  fechaLlegada: Date;
+  fechaVenta: string;
+  fechaLlegada: string;
   estadoVenta: string;
   importeTotal: number;
   gastosEnvio: number;
@@ -23,8 +24,8 @@ export class Venta {
   public numVenta: string;
   public comprador: string;
   public numArticulos: number;
-  public fechaVenta: Date;
-  public fechaLlegada: Date;
+  public fechaVenta: string;
+  public fechaLlegada: string;
   public estadoVenta: string;
   public importeTotal: number;
   public gastosEnvio: number;
@@ -38,7 +39,7 @@ export class Venta {
     this.numVenta = '';
     this.comprador = '';
     this.numArticulos = 0;
-    this.fechaVenta = null;
+    this.fechaVenta = moment(new Date()).format("YYYY-MM-DD");
     this.fechaLlegada = null;
     this.estadoVenta = '';
     this.importeTotal = 0;
