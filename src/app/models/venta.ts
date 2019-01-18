@@ -1,6 +1,6 @@
 import { Estados } from './estados.enum';
 import { ICarta, Carta } from './carta';
-import moment from 'moment';
+import * as moment from 'moment';
 
 export interface IVenta {
   _id: string;

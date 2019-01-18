@@ -19,7 +19,10 @@ export class StockComponent implements OnInit {
   constructor(private stockService: StockService, private ventasService: VentasService, private router: Router) { }
 
   ngOnInit() {
-    this.stockService.getCartas().subscribe(stock=>this.stock = stock);
+    this.stockService.getCartas().subscribe(stock=>{
+      this.stock = stock;
+      console.log(this.stock);
+    });
     this.venta = this.ventasService.getVenta();
     this.carritoDisabled = this.venta.cartasVendidas.length === 0;
   }

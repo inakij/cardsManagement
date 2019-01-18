@@ -73,6 +73,10 @@
       <button class="btn btn-success col-2" type="button" [disabled]="addDisabled" (click)="addCarta()">Añadir</button>  
     </div>
 
+    <div>           
+      <button class="btn btn-warning col-2" type="button" [disabled]="!compraForm.valid" (click)="calcularTotales(compraForm)">Calcular Precios Totales</button>      
+    </div>
+
     <div formArrayName="cartasCompradasArray">
       <div class="row">
         <div class="col-11">
