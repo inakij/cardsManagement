@@ -4,9 +4,11 @@ import { ICarta, Carta } from '../../../models/carta';
 import { IVenta, Venta } from '../../../models/venta';
 import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Estados } from '../../../models/estados.enum';
+import { Regex } from '../../../models/regex.enum';
 import { VentasService } from '../../../services/ventas.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import moment from 'moment';
+import { ValidatorService } from '../../../services/validator.service'
 
 @Component({
   selector: 'app-venta',
@@ -22,6 +24,7 @@ export class VentaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ventasService: VentasService,
+    private validatorService: ValidatorService,
     private route: ActivatedRoute) {
 
   }
@@ -37,18 +40,19 @@ export class VentaComponent implements OnInit {
     this.ventaForm = this.fb.group({
       _id: [''],
       numVenta: [''],
-      comprador: [''],
-      numArticulos: [0],
+      comprador: ['', Validators.required],
+      numArticulos: [0, [Validators.required, Validators.pattern(Regex.numeroEntero)]],
       fechaVenta: [''],
       fechaLlegada: [''],
       estadoVenta: [''],
-      importeTotal: [0],
-      gastosEnvio: [0],
-      otrosGastos: [0],
-      refund: [0],
+      importeTotal: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      gastosEnvio: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      costeEnvio: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      otrosCostes: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      refund: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
       mkm: [false],
       observaciones: [''],
-      cartasVendidas: this.fb.array([])
+      cartasVendidas: this.fb.array([], this.validatorService.minLengthArray(1))
     });
   }
 
@@ -84,21 +88,21 @@ export class VentaComponent implements OnInit {
   initCarta(){
     return this.fb.group({
       _id: [''],
-      cantidad: [0, Validators.required],
-      precioCompra: [0],
-      precioVenta: [0],
+      cantidad: [0, [Validators.required, Validators.pattern(Regex.numeroEntero)]],
+      precioCompra: [0, Validators.pattern(Regex.numeroConDecimales)],
+      precioVenta: [0, Validators.pattern(Regex.numeroConDecimales)],
       observaciones: [''],
       estadoVenta: [Estados.Poor],
       apiId: [''],
       imagen: [''],
       nombre: [''],
       edicion: [''],
-      idioma: [''],
+      idioma: ['', Validators.required],
       estadoCompra: [Estados.Poor],
       foil: [false],
       firmado: [false],
       alterado: [false],
-      precioTotal: [0],
+      precioTotal: [0, Validators.pattern(Regex.numeroConDecimales)],
       vendido: [false],
       fechaVenta: ['']
     });

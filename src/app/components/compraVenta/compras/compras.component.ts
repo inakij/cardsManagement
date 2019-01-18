@@ -23,6 +23,7 @@ export class ComprasComponent implements OnInit {
       this.expandido.length = compras.length;
       this.expandido.fill(false, 0);
     });
+
   }
 
   expandirCompra(id: number){

@@ -12,6 +12,7 @@
             <th scope="col" class="columns1">Estado</th>
             <th scope="col" class="columns05">Total</th>
             <th scope="col" class="columns05">Gastos Envío</th>
+            <th scope="col" class="columns05">Coste Envío</th>
             <th scope="col" class="columns05">Otros Gastos</th>
             <th scope="col" class="columns05">Refund</th>
             <th scope="col" class="columns05">MKM</th>
@@ -27,7 +28,7 @@
               <input type="text" class="form-control" formControlName="comprador">
             </td>
             <td class="columns1">
-              <input type="number" class="form-control" formControlName="numArticulos"> 
+              <input type="text" class="form-control" formControlName="numArticulos"> 
             </td>
             <td class="columns1">
               <input type="date" class="form-control" formControlName="fechaVenta">
@@ -41,16 +42,19 @@
               </select>
             </td>
             <td class="columns1">              
-              <input type="number" class="form-control" formControlName="importeTotal">
+              <input type="text" class="form-control" formControlName="importeTotal">
             </td>            
             <td class="columns1">
-              <input type="number" class="form-control" formControlName="gastosEnvio">
+              <input type="text" class="form-control" formControlName="gastosEnvio">
             </td>
             <td class="columns1">
-              <input type="number" class="form-control" formControlName="otrosGastos">
+              <input type="text" class="form-control" formControlName="costeEnvio">
             </td>
             <td class="columns1">
-              <input type="number" class="form-control" formControlName="refund">
+              <input type="text" class="form-control" formControlName="otrosCostes">
+            </td>
+            <td class="columns1">
+              <input type="text" class="form-control" formControlName="refund">
             </td>
             <td class="columns1">
               <input type="checkbox" class="form-check-inline" formControlName="mkm">

@@ -23,6 +23,7 @@ import { CartaCompradaComponent } from './components/compraVenta/carta-comprada/
 //PIPES
 import { EnumPipe } from './pipes/enum.pipe';
 import { CartaVendidaComponent } from './components/compraVenta/carta-vendida/carta-vendida.component';
+import { ValidatorService } from './services/validator.service';
 
 @NgModule({
   imports:      [ 
@@ -39,14 +40,16 @@ import { CartaVendidaComponent } from './components/compraVenta/carta-vendida/ca
     CardSearchComponent, 
     CardStatusComponent, 
     EnumPipe, 
-    CartaCompradaComponent, CartaVendidaComponent
+    CartaCompradaComponent, 
+    CartaVendidaComponent
     ],
   bootstrap:    [ AppComponent ],
   providers: [ 
     CardApiSearchService, 
     ComprasService, 
     StockService, 
-    VentasService 
+    VentasService, 
+    ValidatorService 
     ]
 })
 export class AppModule { }

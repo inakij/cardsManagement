@@ -15,16 +15,21 @@ export class StockService {
 
   constructor(private http: HttpClient) { }
 
-  getCartas(): Observable<Array<ICarta>> {
+  getStock(): Observable<Array<ICarta>> {
     let url = this.endpoint + 'cartas';
-    if (this.stock) {
-      return Observable.create(observer => observer.next(this.stock));
-    }
     return this.http.get<Array<ICarta>>(url).pipe(map(stock => {
       this.stock = [];
       this.stock.push(...stock);
       return stock;
     }));
+  }
+
+  getCartas(): Observable<Array<ICarta>> {
+    let url = this.endpoint + 'cartas';
+    if (!this.stock) {
+      return this.getStock();
+    }
+    return Observable.create(observer => observer.next(this.stock));
   }
 
 }

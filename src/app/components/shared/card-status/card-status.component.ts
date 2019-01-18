@@ -47,6 +47,7 @@ export class CardStatusComponent implements OnInit {
         this.cardStatus = new CardStatus();
         this.idiomas = ["English"];
         this.cardStatus.idioma = "English";
+        this.emitStatus();
       }
     }
   }

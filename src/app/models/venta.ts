@@ -12,7 +12,8 @@ export interface IVenta {
   estadoVenta: string;
   importeTotal: number;
   gastosEnvio: number;
-  otrosGastos: number;
+  costeEnvio: number;
+  otrosCostes: number;
   refund: number;
   mkm: boolean;
   observaciones: string;
@@ -29,7 +30,8 @@ export class Venta {
   public estadoVenta: string;
   public importeTotal: number;
   public gastosEnvio: number;
-  public otrosGastos: number;
+  public costeEnvio: number;
+  public otrosCostes: number;
   public refund: number;
   public mkm: boolean;
   public observaciones: string;
@@ -44,7 +46,8 @@ export class Venta {
     this.estadoVenta = '';
     this.importeTotal = 0;
     this.gastosEnvio = 0;
-    this.otrosGastos = 0;
+    this.costeEnvio = 0;
+    this.otrosCostes = 0;
     this.refund = 0;
     this.mkm = false;
     this.observaciones = '';

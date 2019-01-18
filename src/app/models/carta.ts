@@ -5,6 +5,7 @@ import { ICardStatus } from './card-status';
 export interface ICarta {
   _id: string;
   idCompra: string;
+  idVenta: string;
   apiId: string;
   imagen: string;
   nombre: string;
@@ -30,6 +31,7 @@ export interface ICarta {
 export class Carta implements ICarta{
   public _id: string;
   public idCompra: string;
+  public idVenta: string;
   public apiId: string;
   public imagen: string;
   public nombre: string;

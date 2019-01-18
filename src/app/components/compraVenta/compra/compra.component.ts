@@ -3,10 +3,12 @@ import { CardStatus, ICardStatus } from '../../../models/card-status';
 import { ApiCard, IApiCard } from '../../../models/api-card';
 import { ICarta, Carta } from '../../../models/carta';
 import { ICompra, Compra } from '../../../models/compra';
+import { Regex } from '../../../models/regex.enum'
 import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Estados } from '../../../models/estados.enum';
 import { ComprasService } from '../../../services/compras.service';
 import { CardApiSearchService } from '../../../services/card-api-search.service';
+import { ValidatorService } from '../../../services/validator.service'
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import moment from 'moment';
 
@@ -26,7 +28,7 @@ export class CompraComponent implements OnInit {
   private compra: ICompra;
   private id: string;
 
-  constructor(private fb: FormBuilder, private comprasService: ComprasService, private cardApi: CardApiSearchService, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private comprasService: ComprasService, private cardApi: CardApiSearchService, private route: ActivatedRoute, private validatorService: ValidatorService) {
     this.compra = new Compra();
     this.generarForm();
   }
@@ -99,18 +101,18 @@ export class CompraComponent implements OnInit {
       _id: [''],
       numCompra: [''],
       vendedor: ['', Validators.required],
-      numArticulos: [0, Validators.required],
+      numArticulos: [0, [Validators.required, Validators.pattern(Regex.numeroEntero)]],
       fechaCompra: ['', Validators.required],
       fechaLlegada: [''],
       estadoCompra: [''],
-      importeTotal: [0, Validators.required],
-      valorArticulos: [0, Validators.required],
-      gastosEnvio: [0],
-      otrosGastos: [0],
-      refund: [0],
+      importeTotal: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      valorArticulos: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      gastosEnvio: [0, Validators.pattern(Regex.numeroConDecimales)],
+      otrosGastos: [0, Validators.pattern(Regex.numeroConDecimales)],
+      refund: [0, Validators.pattern(Regex.numeroConDecimales)],
       mkm: [false],
       observaciones: [''],
-      cartasCompradasArray: this.fb.array([])
+      cartasCompradasArray: this.fb.array([], this.validatorService.minLengthArray(1))
     });
   }
 
@@ -140,9 +142,9 @@ export class CompraComponent implements OnInit {
   initCarta(){
     return this.fb.group({
       _id: [''],
-      cantidad: [0, Validators.required],
-      precioCompra: [0, Validators.required],
-      precioVenta: [0],
+      cantidad: [0, [Validators.required, Validators.pattern(Regex.numeroEntero)]],
+      precioCompra: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
+      precioVenta: [0, [Validators.required, Validators.pattern(Regex.numeroConDecimales)]],
       observaciones: [''],
       estadoVenta: [Estados.Poor],
       apiId: [''],
@@ -154,7 +156,7 @@ export class CompraComponent implements OnInit {
       foil: [false],
       firmado: [false],
       alterado: [false],
-      precioTotal: [0],
+      precioTotal: [0, Validators.pattern(Regex.numeroConDecimales)],
       vendido: [false],
       fechaVenta: ['']
     });
