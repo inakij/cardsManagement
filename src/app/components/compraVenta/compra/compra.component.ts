@@ -1,16 +1,15 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CardStatus, ICardStatus } from '../../../models/card-status';
-import { ApiCard, IApiCard } from '../../../models/api-card';
+import { IApiCard } from '../../../models/api-card';
 import { ICarta, Carta } from '../../../models/carta';
 import { ICompra, Compra } from '../../../models/compra';
 import { Regex } from '../../../models/regex.enum'
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Estados } from '../../../models/estados.enum';
 import { ComprasService } from '../../../services/compras.service';
 import { CardApiSearchService } from '../../../services/card-api-search.service';
 import { ValidatorService } from '../../../services/validator.service'
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import moment from 'moment';
 
 @Component({
   selector: 'app-compra',
@@ -28,7 +27,7 @@ export class CompraComponent implements OnInit {
   private compra: ICompra;
   private id: string;
 
-  constructor(private fb: FormBuilder, private comprasService: ComprasService, private cardApi: CardApiSearchService, private route: ActivatedRoute, private validatorService: ValidatorService) {
+  constructor(private fb: FormBuilder, private comprasService: ComprasService, private route: ActivatedRoute, private validatorService: ValidatorService) {
     this.compra = new Compra();
     this.generarForm();
   }
@@ -56,11 +55,11 @@ export class CompraComponent implements OnInit {
 
   onSubmit({ value, valid }: { value: ICompra, valid: boolean }) {
     console.log('submit');
-    if(!this.id){
+    if (!this.id) {
       console.log('new');
       this.comprasService.createCompra(value).subscribe(compra => {
         console.log(compra);
-        if(compra){
+        if (compra) {
           //TODO mensaje guardado OK
           console.log('Guardado OK');
           this.compra = compra;
@@ -71,8 +70,8 @@ export class CompraComponent implements OnInit {
     } else {
       console.log('update');
       this.comprasService.updateCompra(value).subscribe(compra => {
-        console.log(compra);        
-        if(compra){
+        console.log(compra);
+        if (compra) {
           //TODO mensaje guardado OK
           console.log('Modificado OK');
           this.compra = compra;
@@ -80,7 +79,7 @@ export class CompraComponent implements OnInit {
           this.populateForm();
         }
       });
-    }    
+    }
   }
 
   onStatusChange(cardStatus: ICardStatus) {
@@ -139,7 +138,7 @@ export class CompraComponent implements OnInit {
     });
   }
 
-  initCarta(){
+  initCarta() {
     return this.fb.group({
       _id: [''],
       cantidad: [0, [Validators.required, Validators.pattern(Regex.numeroEntero)]],
@@ -156,7 +155,7 @@ export class CompraComponent implements OnInit {
       foil: [false],
       firmado: [false],
       alterado: [false],
-      precioTotal: [0, Validators.pattern(Regex.numeroConDecimales)],
+      precioTotal: [0],
       vendido: [false],
       fechaVenta: ['']
     });
@@ -167,7 +166,7 @@ export class CompraComponent implements OnInit {
       _id: carta._id,
       cantidad: carta.cantidad,
       precioCompra: carta.precioCompra,
-      precioVenta: carta.precionVenta,
+      precioVenta: carta.precioVenta,
       observaciones: carta.observaciones,
       estadoVenta: Estados.Poor,
       apiId: carta.apiId,
@@ -185,7 +184,7 @@ export class CompraComponent implements OnInit {
     });
   }
 
-  crearFormCarta(carta: ICarta){
+  crearFormCarta(carta: ICarta) {
     this.cartaForm = this.initCarta();
     this.populateCarta(carta);
   }
@@ -198,8 +197,8 @@ export class CompraComponent implements OnInit {
   }
 
   generarCarta(carta: ICarta) {
-    const cartas = this.getCartasCompradas(); 
-    this.crearFormCarta(carta);     
+    const cartas = this.getCartasCompradas();
+    this.crearFormCarta(carta);
     cartas.push(this.cartaForm);
     this.addDisabled = true;
     this.resetOptions++;
@@ -215,14 +214,28 @@ export class CompraComponent implements OnInit {
   splitCarta(indexCarta: number) {
     let cantidad: number = (<FormGroup>this.getCartasCompradas().controls[indexCarta]).controls.cantidad.value;
     let carta: ICarta = new Carta();
-    Object.assign(carta, <FormGroup>this.getCartasCompradas().controls[indexCarta].value);    
-    carta.precioCompra = carta.precioCompra/cantidad;
+    Object.assign(carta, <FormGroup>this.getCartasCompradas().controls[indexCarta].value);
+    carta.precioCompra = carta.precioCompra / cantidad;
+    carta.cantidad = 1;
     for (let forIndex = 0; forIndex < cantidad; forIndex++) {
       //this.getCartasCompradas().push(this.initCarta(this.cartasGuardadas[indexCarta]));
       this.crearFormCarta(carta);
       this.getCartasCompradas().push(this.cartaForm);
     }
     this.getCartasCompradas().removeAt(indexCarta);
+  }
+
+  /**
+   * Calcula los precios reales de las cartas basandose se los gastos
+   */
+  calcularTotales({ value, valid }: { value: ICompra, valid: boolean }){
+    //gastosEnvio + otrosGastos - refund
+    const gatosTotales: number = Number(value.gastosEnvio) + Number(value.otrosGastos) - Number(value.refund);
+    const cartas = value.cartasCompradasArray;
+    const ctdCartas = cartas.reduce((prev, carta, index)=>prev+=carta.cantidad, 0)
+    const ctdAdd = gatosTotales/ctdCartas;
+    cartas.map(carta=>carta.precioTotal = carta.precioCompra + (ctdAdd*carta.cantidad));
+    this.getCartasCompradas().controls.forEach((fg, index)=>fg.patchValue(cartas[index]));
   }
 
   /**

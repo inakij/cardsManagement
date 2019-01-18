@@ -24,6 +24,6 @@ export class CartaCompradaComponent implements OnInit {
   }
 
   asignarPrecio(porcentaje: number){
-    this.carta.precionVenta = this.carta.precioTotal + this.carta.precioTotal*porcentaje;
+    this.carta.precioVenta = this.carta.precioTotal + this.carta.precioTotal*porcentaje;
   }
 }

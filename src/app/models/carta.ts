@@ -18,7 +18,8 @@ export interface ICarta {
   alterado: boolean;
   precioCompra: number;
   precioTotal: number;
-  precionVenta: number;
+  precioVenta: number;
+  precioVentaFinal: number;
   cantidad: number;
   observaciones: string;
   vendido: boolean;
@@ -44,7 +45,8 @@ export class Carta implements ICarta{
   public alterado: boolean;
   public precioCompra: number;
   public precioTotal: number;
-  public precionVenta: number;
+  public precioVenta: number;
+  public precioVentaFinal: number;
   public cantidad: number;
   public observaciones: string;
   public vendido: boolean;
@@ -57,8 +59,9 @@ export class Carta implements ICarta{
     this.firmado = false;
     this.alterado = false;
     this.precioCompra = 0;
-    this.precioTotal = 0;
-    this.precionVenta = 0;
+    this.precioTotal = 0; 
+    this.precioVenta = 0;
+    this.precioVentaFinal = 0;
     this.cantidad = 1;
     this.vendido = false;
   }

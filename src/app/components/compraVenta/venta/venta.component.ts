@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CardStatus, ICardStatus } from '../../../models/card-status';
-import { ICarta, Carta } from '../../../models/carta';
-import { IVenta, Venta } from '../../../models/venta';
-import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { ICarta } from '../../../models/carta';
+import { IVenta } from '../../../models/venta';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Estados } from '../../../models/estados.enum';
 import { Regex } from '../../../models/regex.enum';
 import { VentasService } from '../../../services/ventas.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
 import { ValidatorService } from '../../../services/validator.service'
 
 @Component({
@@ -24,8 +22,7 @@ export class VentaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ventasService: VentasService,
-    private validatorService: ValidatorService,
-    private route: ActivatedRoute) {
+    private validatorService: ValidatorService) {
 
   }
 
@@ -67,7 +64,7 @@ export class VentaComponent implements OnInit {
       estadoVenta:  this.venta.estadoVenta,
       importeTotal:  this.venta.importeTotal,
       gastosEnvio:  this.venta.gastosEnvio,
-      otrosGastos:  this.venta.otrosGastos,
+      otrosCostes:  this.venta.otrosCostes,
       refund:  this.venta.refund,
       mkm:  this.venta.mkm,
       observaciones:  this.venta.observaciones,
@@ -91,6 +88,7 @@ export class VentaComponent implements OnInit {
       cantidad: [0, [Validators.required, Validators.pattern(Regex.numeroEntero)]],
       precioCompra: [0, Validators.pattern(Regex.numeroConDecimales)],
       precioVenta: [0, Validators.pattern(Regex.numeroConDecimales)],
+      precioVentaFinal: [0, Validators.pattern(Regex.numeroConDecimales)],
       observaciones: [''],
       estadoVenta: [Estados.Poor],
       apiId: [''],
@@ -113,7 +111,8 @@ export class VentaComponent implements OnInit {
       _id: carta._id,
       cantidad: carta.cantidad,
       precioCompra: carta.precioCompra,
-      precioVenta: carta.precionVenta,
+      precioVenta: carta.precioVenta,
+      precioVentaFinal: carta.precioVentaFinal,
       observaciones: carta.observaciones,
       estadoVenta: Estados.Poor,
       apiId: carta.apiId,
